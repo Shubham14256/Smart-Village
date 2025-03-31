@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gram Social</title>
+    <link rel="stylesheet" href="./css/2_Problems.css">
+</head>
+<style>
+   /* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #b3b3f3;
+    color: #333;
+}
+
+/* Form Container */
+form {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    color: black;
+    top: 72px;
+}
+
+/* Headings */
+h1 {
+    text-align: center;
+    color: black;
+    top: 121px;
+}
+
+/* Input Fields */
+input, textarea, select {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #161515;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 14px;
+    color: black;
+    font: bold;
+    
+}
+
+/* Labels */
+label {
+    font-weight: bold;
+    margin-top: 10px;
+    display: block;
+    color: #050505;
+}
+
+/* Button */
+button {
+    background-color: #4CAF50;
+    color: rgb(73, 71, 71);
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+*{
+  margin: 0%;
+  padding: 0%;
+  color: white;
+}
+.navbar {
+  height: 50px;
+  /* width: 500px; */
+  border: solid white 2px;
+  background-color: #10bfb6;
+  padding: 10px;
+  border-radius: 10px;
+  text-decoration: none;
+  display: flex;
+;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.navbar a:hover {
+    color: white; /* Change text color on hover */
+    border-bottom: 3px solid white;  /* Add a bottom border on hover */
+}
+
+a {
+    text-decoration: none;
+    color: inherit; 
+}
+
+video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+}
+.problemtype{
+    color: black;
+
+}
+.description{
+    color: black;
+}
+
+</style>
+<body>
+    <div class="navbar">
+        <a id="Home" href="index.html">Home</a>
+        <a id="Problems" href="2_Problems.html"> problems</a>
+        <a id="GramSocial" href="3_Gram Social.html">Gram Social</a>
+        <a id="Resources" href="4_Developement.html">Developement</a>
+        <a id="AboutUs" href="5_About Us.html">About Us</a>
+        <a id="ContactUs" href="6_Contact Us.html">Contact Us</a>
+        <a id="Log In" href="7_Log In.html">Log In</a>
+    </div>
+<div  > 
+    <h1>Submit Your Problem</h1>
+    <form id="problemform">
+        <label for="name">name:</label><br>
+        <input type="text" id="name" name="name" required><br><br>
+        
+        <label for="mobilenumber ">mobilenumber:</label><br>
+        <input type="tel" id="mobilenumber" name="mobilenumber" required><br><br>
+    
+        <label for="contact">adharcardnumber:</label><br>
+        <input type="tel" id="adharcardnumber" name="adharcardnumber" required><br><br>
+        <label for="name">email:</label><br>
+        <input type="text" id="email" name="email" required><br><br>
+        
+        <label for="problem-type" class="problemtype">problemtype:</label><br>
+        <select id="problemtype" name="problemtype" required>
+            <option value="water">Water Supply</option>
+            <option value="electricity">Electricity</option>
+            <option value="roads">Road Maintenance</option>
+            <option value="healthcare">Healthcare</option>
+            <option value="other">Other</option>
+        </select><br><br>
+        
+        <label for="description">description:</label><br>
+        <textarea id="description" name="description" rows="4" required></textarea><br><br>
+        
+        <button type="submit" class="btn btn-register w-100">Register</button>
+    </form>
+    
+    
+</div>
+<script>
+    document.getElementById('problemform').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const formData = {
+             name: document.getElementById('name').value,
+             mobilenumber: document.getElementById('mobilenumber').value,
+             problemtype: document.getElementById('problemtype').value,
+             description: document.getElementById('description').value,
+             email: document.getElementById('email').value,
+             adharcardnumber: document.getElementById('adharcardnumber').value,
+             
+        }
+
+        // Send a POST request to the backend
+        fetch('http://localhost:3000/submit/sub', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+               // localStorage.setItem("submit", JSON.stringify(data.submit));
+                alert('Problem Submited!');
+                window.location.href = 'http://localhost/Smart-Village/2_Problems.html';  // Redirect to the dashboard page
+            } 
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('There was an error with the Submiting.');
+        });
+    });
+</script>
+</body>
+</html>
